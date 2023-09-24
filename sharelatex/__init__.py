@@ -1073,7 +1073,11 @@ class SyncClient:
             "qqfilename": path_as_path.name,
             "qqtotalfilesize": os.path.getsize(path_as_path),
         }
-        r = self._post(url, params=params, files=files, verify=self.verify)
+        data = {
+            "type": mime,
+            "name": path_as_path.name,
+        }
+        r = self._post(url, params=params, data=data, files=files, verify=self.verify)
         r.raise_for_status()
         response = r.json()
         if not response["success"]:
